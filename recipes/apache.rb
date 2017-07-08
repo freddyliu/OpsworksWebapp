@@ -13,3 +13,13 @@ package "apache2" do
     end
     action :install
 end
+
+service "apache" do
+    case node[:platform]
+    when "centos","redhat","fedora","amazon"
+        package_name "httpd"
+    when "debian","ubuntu"
+        package_name "apache2"
+    end
+    action [:enable, :start]
+end
